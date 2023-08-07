@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react';
+import React, { useEffect,useState} from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import noteContext from '../context/notes/noteContext';
@@ -6,13 +6,22 @@ const Navbar = (props) => {
   let navigate = useNavigate();
   const context = useContext(noteContext);
   const { user, getUser } = context;
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    alert(`Searching for: ${searchQuery}`);
+    // props.handleSearchQuery(searchQuery);
+    setSearchQuery('');
+  };
+
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     props.showAlert('Logged out Successfully', 'success');
     navigate('/login');
   };
-
+   
   let location = useLocation();
   
   useEffect(() => {
@@ -42,7 +51,7 @@ const Navbar = (props) => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link className={`nav-link ${location.pathname === '/main' ? 'active' : ''}`} aria-current="page" to="/main">
+              <Link className={ `nav-link ${location.pathname === '/main' ? 'active' : ''}`  } aria-current="page" to="/main">
                 WORK SPACE
               </Link>
             </li>
@@ -52,6 +61,18 @@ const Navbar = (props) => {
               </Link>
             </li>
           </ul>
+
+          <form className="d-flex ">
+        <input
+          type="text"
+          className="form-control me-2"
+          placeholder="Search by title"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <button className="btn btn-outline-success mx-3" type="submit" onClick={handleSearch}>Search</button>
+      </form>
+
           {localStorage.getItem('token') ? 
             <div className="d-flex align-items-center ">
               <span className="text-white text-capitalize ">
@@ -80,6 +101,7 @@ const Navbar = (props) => {
       </div>
     </nav>
   );
+  <>props.search</>
 };
 
 export default Navbar;

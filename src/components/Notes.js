@@ -16,10 +16,11 @@ const Notes = (props) => {
 
   // Get the top three notes when showAllNotes is false, otherwise get all notes
   // const displayedNotes = showAllNotes ? notes : notes.slice(0, 3);
-  const displayedNotes = showAllNotes ? notes : notes.slice(-3).reverse();
+  const displayedNotes = showAllNotes ? notes.slice().reverse() : notes.slice(-3).reverse();
+
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 40, behavior: "smooth" });
+    window.scrollTo({ top: 70, behavior: "smooth" });
   };
 
   const handleShowTopThree = () => {
@@ -74,6 +75,9 @@ const Notes = (props) => {
     refClose.current.click();
     props.showAlert("Updated Successfully", "success");
   };
+
+
+
 
   const onChange = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value });

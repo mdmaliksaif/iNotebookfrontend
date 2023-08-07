@@ -2,7 +2,7 @@ import { useState } from 'react'
 import NoteContext from './noteContext'
 
 const NoteState = (props)=>{
-    const host = "https://inotebookbackend-huso.onrender.com"
+  const host = "http://localhost:5000"
     const notesInitial = []
     const [notes, setNotes] = useState(notesInitial);
     const [user, setUser] = useState(notesInitial);
@@ -66,6 +66,7 @@ const NoteState = (props)=>{
         setNotes(newNotes);
       }
       //Edit a Note
+
       const editNote = async(id, title, description, tag) =>{
         //API call
         const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
